@@ -1,1 +1,1 @@
-# node-red-contrib-configservice-connector
+# node-red-context-configservice

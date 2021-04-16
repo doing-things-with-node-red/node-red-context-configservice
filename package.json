@@ -1,0 +1,26 @@
+{
+  "name": "@doing-things-with-node-red/node-red-context-configservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "ci-publish": "ci-publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doing-things-with-node-red/node-red-context-configservice.git"
+  },
+  "author": "Yeray Medina López",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/doing-things-with-node-red/node-red-context-configservice/issues"
+  },
+  "homepage": "https://github.com/doing-things-with-node-red/node-red-context-configservice#readme",
+  "dependencies": {
+    "lodash.merge": "^4.6.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "ci-publish": "^1.3.1"
+  }
+}

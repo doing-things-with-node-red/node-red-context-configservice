@@ -1,0 +1,33 @@
+version: "3"
+services:
+  configservice:
+    container_name: configservice
+    build:
+      context: mock
+    ports: ["8080:80"]
+    volumes:
+      - type: bind
+        source: ./mock/properties.json
+        target: /usr/share/nginx/html/properties.json
+
+  node-red:
+    container_name: node-red
+    build:
+      context: nodered
+    ports: ["8000:8000"]
+    links:
+      - configservice
+    environment:
+      SPRING_CLOUD_CONFIG_URL: "http://configservice:80/properties.json"
+      SPRING_CLOUD_SKIPSSLVALIDATION: 'false'
+      SPRING_CLOUD_REFRESH_RATE: 15000
+      SPRING_CLOUD_RETRIES: 3
+
+    volumes:
+      - type: bind
+        source: ../
+        target: /opt/app/node_modules/@doing-things-with-node-red/node-red-context-configservice
+
+volumes:
+  configservice:
+  node-red:
