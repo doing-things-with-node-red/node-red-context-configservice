@@ -9,20 +9,27 @@ const DEFAULT_REQUEST_OPTS = require('./constants')
 class ConfigServiceStorage {
     constructor(url, opts) {
         const self = this
-        async function _requestConfig(url, opts) {
+        async function _requestConfig(url, opts, retries=1, interval=false) {
             try {
                 if (url && url.length) {
-                    log.info(`[ConfigService Connector] request to ${url} every ${opts.interval} miliseconds`)
+                    log.info(`[ConfigService Connector] request to ${url} every ${opts.interval/1000} seconds`)
                     const config = await request({ url, strictSSL: opts.strictSSL })
                     self.data.global.config = merge({}, self.data.global.config, JSON.parse(config))
                     log.info('[ConfigService Connector] request successfully')
+                    // Start the clock
+                    if (interval) {
+                        setInterval(() => _requestConfig(url, opts), opts.interval)
+                    }
                 } else {
                     throw new Error('target url is missing')
                 }
             } catch(err) {
                 log.error(`[ConfigService Connector] request failed`)
                 log.debug(`[ConfigService Connector] response error: ${err.message}`)
-                if (opts.optional) {
+                if (retries <= opts.retries) {
+                    log.error(`[ConfigService Connector] waiting for ${opts.delayRetries/1000} seconds before next attempt ${retries}/${opts.retries}`)
+                    setTimeout(() => _requestConfig(url, opts, retries+1), 5000);
+                } else if (opts.optional) {
                     log.warn('[ConfigService Connector] dependency is optional')
                 } else {
                     log.warn('[ConfigService Connector] dependency is mandatory')
@@ -39,9 +46,7 @@ class ConfigServiceStorage {
             }
         };
         // Request once Configuration
-        _requestConfig(url, this.opts)
-        // Start the clock
-        setInterval(() => _requestConfig(url, this.opts), this.opts.interval)
+        _requestConfig(url, this.opts, 0, true)
     }
     // We copy the following code from here:
     // https://github.com/node-red/node-red/blob/master/packages/node_modules/%40node-red/runtime/lib/nodes/context/memory.js
