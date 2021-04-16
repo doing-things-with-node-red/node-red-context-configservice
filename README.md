@@ -9,7 +9,6 @@ The scope of a particular context value determines who it is shared with. There 
 * Global - visible to all nodes
 
 We are looking for use both features, to retrieve and storage  externalized configuration in our Node-RED Global context.
-![Alt Text](assets/configservice.gif)
 
 ## Context Store with ConfigService
 Node-RED provides two built-in modules for this:
@@ -33,3 +32,7 @@ contextStorage: {
     }
 },
 ```
+
+## Compose
+We are using Docker Compose to test our e2e
+![Alt Text](assets/configservice.gif)
