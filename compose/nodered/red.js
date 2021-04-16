@@ -1,7 +1,7 @@
 const http = require('http')
 const express = require("express")
 const RED = require("node-red")
-// const configServiceConnector = require("@doing-things-with-node-red/node-red-context-configservice")
+
 const settings = require("./settings")
 
 async function startServer() {
@@ -21,11 +21,6 @@ async function startServer() {
     server.listen(8000)
     // Start the runtime
     RED.start()
-    /*
-    RED.start().then(() => {
-        new configServiceConnector("http://configservice:80/properties.json").initLoad(settings.functionGlobalContext.config)
-    })
-    */
 }
 
 startServer()

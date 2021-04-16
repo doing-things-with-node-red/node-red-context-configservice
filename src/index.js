@@ -43,6 +43,8 @@ class ConfigServiceStorage {
         // Start the clock
         setInterval(() => _requestConfig(url, this.opts), this.opts.interval)
     }
+    // We copy the following code from here:
+    // https://github.com/node-red/node-red/blob/master/packages/node_modules/%40node-red/runtime/lib/nodes/context/memory.js
     open() {
         return Promise.resolve()
     }
