@@ -1,6 +1,8 @@
 module.exports = {
     uiPort: 8000,
     userDir: '/home/nodejs/nodered',
+    httpAdminRoot: '/',
+    httpNodeRoot: '/',
     contextStorage: {
         default: {
             module: config => (require("@doing-things-with-node-red/node-red-context-configservice")(
