@@ -1,3 +1,4 @@
+[![Node.js Package](https://github.com/doing-things-with-node-red/node-red-context-configservice/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/doing-things-with-node-red/node-red-context-configservice/actions/workflows/npm-publish.yml)
 # node-red-context-configservice
 [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config/reference/html/#_spring_cloud_config_server) provides server-side for externalized configuration in a distributed system. You have a central place to manage external properties for applications across all environments.
 
