@@ -1,6 +1,6 @@
 {
   "name": "@doing-things-with-node-red/node-red-context-configservice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "src/index.js",
   "repository": {

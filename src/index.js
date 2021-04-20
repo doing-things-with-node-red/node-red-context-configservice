@@ -15,6 +15,7 @@ class ConfigServiceStorage {
                     log.info(`[ConfigService Connector] request to ${url} every ${opts.interval/1000} seconds`)
                     const config = await request({ url, strictSSL: opts.strictSSL })
                     self.data.global.config = merge({}, self.data.global.config, JSON.parse(config))
+                    self.firstTime = true
                     log.info('[ConfigService Connector] request successfully')
                     // Start the clock
                     if (interval) {
@@ -29,15 +30,14 @@ class ConfigServiceStorage {
                 if (retries <= opts.retries) {
                     log.error(`[ConfigService Connector] waiting for ${opts.delayRetries/1000} seconds before next attempt ${retries}/${opts.retries}`)
                     setTimeout(() => _requestConfig(url, opts, retries+1), 5000);
-                } else if (opts.optional) {
-                    log.warn('[ConfigService Connector] dependency is optional')
-                } else {
+                } else if (!self.firstTime && !opts.optional) {
                     log.warn('[ConfigService Connector] dependency is mandatory')
                     process.exit(503)
-                }
+                } 
             }
         }
         // Assign ConfigServiceStorage parameters
+        this.firstTime = false
         this.url = url
         this.opts = merge({}, DEFAULT_REQUEST_OPTS, opts)
         this.data = {
